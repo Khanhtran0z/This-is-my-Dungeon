@@ -130,9 +130,22 @@
             <button onclick="sendCommand()">Gửi</button>
             <button onclick="saveGame()">Save Game</button>
             <button onclick="backToMenu()">Thoát</button>
+            <script>
+  function showSection(id) {
+    const ids = ['main-menu','character-creation','api-setting','saves','game-window'];
+    ids.forEach(x => {
+      const el = document.getElementById(x);
+      if (!el) return;
+      if (x === id) el.style.display = ''; else el.style.display = 'none';
+    });
+  }
+  function showMainMenu(){ showSection('main-menu'); }
+  document.addEventListener('DOMContentLoaded', () => { showMainMenu(); });
+            </script>
         </div>
     </div>
     <script src="xor.js"></script>
-    <script src="main.js"></script>
+    <script type ="module" src="main.js"></script>
 </body>
 </html>
+
