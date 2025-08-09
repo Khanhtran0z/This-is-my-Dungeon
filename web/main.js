@@ -1,4 +1,70 @@
-// --- Menu logic ---
+
+import Prompts, { createSystemMessage, buildWorldSeedPrompt } from "../logic/prompt.js";
+
+const rpConfig = {
+  seedTopic: "Hầm ngục dưới Everveil",
+  language: "vi",
+  tone: "nghiêm túc, súc tích, gợi hình",
+  difficulty: "chuẩn",
+  safety: "PG-13"
+};
+
+let SYSTEM_PROMPT = createSystemMessage(rpConfig).content;
+let WORLD_SEED = ""; // nếu muốn gọi AI tạo seed bối cảnh trước
+
+export async function initRoleplayFrame() {
+  try {
+    // WORLD_SEED = await callModel([{role:"user", content: buildWorldSeedPrompt(rpConfig.seedTopic)}]);
+    localStorage.setItem("dm_system_prompt", SYSTEM_PROMPT);
+    if (WORLD_SEED) localStorage.setItem("dm_world_seed", WORLD_SEED);
+  } catch(e) { console.warn("Seed lỗi, dùng khung mặc định.", e); }
+}
+
+function composeMessages(userText) {
+  const msgs = [{ role: "system", content: SYSTEM_PROMPT }];
+  if (WORLD_SEED) msgs.push({ role: "system", content: WORLD_SEED });
+  msgs.push({ role: "user", content: userText });
+  return msgs;
+}
+
+// TODO: ĐỔI THÀNH HÀM GỌI API THẬT CỦA BẠN
+async function callModel(messages) { throw new Error("Hãy nối callModel() tới API của bạn."); }
+
+// GHÉP VÀO LUỒNG TẠO NHÂN VẬT
+const __orig_createCharacter = typeof createCharacter === "function" ? createCharacter : null;
+window.createCharacter = async function () {
+  await initRoleplayFrame();
+  if (__orig_createCharacter) return __orig_createCharacter();
+};
+
+// GHÉP VÀO LUỒNG GỬI LỆNH
+const __orig_sendCommand = typeof sendCommand === "function" ? sendCommand : null;
+window.sendCommand = async function () {
+  const inputEl = document.getElementById("commandInput");
+  const userText = (inputEl?.value || "").trim();
+  if (!userText) return;
+
+  appendLog(`🗡️ Ngài: ${userText}`);
+  try {
+    const reply = await callModel(composeMessages(userText));
+    appendLog(reply || "(Không có phản hồi)");
+  } catch (e) {
+    appendLog("⚠️ Lỗi khi gọi AI. Kiểm tra cấu hình API.");
+    console.error(e);
+  } finally { if (inputEl) inputEl.value = ""; }
+
+  if (__orig_sendCommand) { try { await __orig_sendCommand(); } catch(_){} }
+};
+
+function appendLog(text) {
+  const log = document.getElementById("game-log");
+  if (!log) return;
+  const line = document.createElement("div");
+  line.className = "log-line";
+  line.textContent = text;
+  log.appendChild(line);
+  log.scrollTop = log.scrollHeight;
+}
 function showCharacterCreation() {
     document.getElementById('main-menu').style.display = 'none';
     document.getElementById('character-creation').style.display = '';
