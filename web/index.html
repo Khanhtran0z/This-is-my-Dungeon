@@ -2,6 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Start</title>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?fit=crop&w=1200&q=80') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'MedievalSharp', cursive;
+            color: #f5e6c8;
+            text-align: center;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .dungeon-logo {
+            width: 120px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px #000);
+        }
+        h1 {
+            font-size: 3em;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px #000;
+            margin-bottom: 10px;
+        }
+        .start-btn {
+            background: linear-gradient(90deg, #6b4226 0%, #bfa76f 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 20px 60px;
+            font-size: 2em;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 0 4px 20px #000a;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 32px #000c;
+            background: linear-gradient(90deg, #bfa76f 0%, #6b4226 100%);
+        }
+        .credit {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #cfcfcf;
+            text-shadow: 1px 1px 4px #000;
+        }
+    </style>
+</head>
+<body>
+    <img class="dungeon-logo" src="https://cdn-icons-png.flaticon.com/512/616/616494.png" alt="Dungeon Logo">
+    <h1>Welcome to the Dungeon</h1>
+    <button class="start-btn" id="startBtn">Start Adventure</button>
+    <div class="credit">Background by Unsplash, Icon by Flaticon</div>
+    <script src="main.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dungeon Master Web</title>
     <link rel="stylesheet" href="style.css">
