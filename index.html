@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Master Web</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Dungeon Master Web</h1>
+        <div id="main-menu">
+            <button onclick="showCharacterCreation()">Start Game</button>
+            <button onclick="showApiSetting()">API Setting</button>
+            <button onclick="showSaves()">Saves</button>
+        </div>
+        <div id="character-creation" style="display:none;">
+            <h2>Tạo nhân vật</h2>
+            <label>Tên nhân vật: <input type="text" id="charName" maxlength="20"></label><br><br>
+            <label>Class:
+                <select id="charClass">
+                    <option value="Warden">Warden</option>
+                    <option value="Necromancer">Necromancer</option>
+                    <option value="Beastmaster">Beastmaster</option>
+                </select>
+            </label><br><br>
+            <button onclick="createCharacter()">Bắt đầu game</button>
+            <button onclick="backToMenu()">Quay lại</button>
+        </div>
+        <div id="api-setting" style="display:none;">
+            <label for="apiKey">Gemini API Key:</label>
+            <input type="password" id="apiKey" placeholder="Nhập API key...">
+            <button onclick="saveApiKey()">Lưu API Key</button>
+            <button onclick="backToMenu()">Quay lại</button>
+        </div>
+        <div id="saves" style="display:none;">
+            <input type="file" id="loadFile" style="display:none;" onchange="loadGameFile(event)">
+            <button onclick="document.getElementById('loadFile').click()">Load Save</button>
+            <button onclick="backToMenu()">Quay lại</button>
+        </div>
+        <div class="game-window" id="game-window" style="display:none;">
+            <div id="game-log"></div>
+            <input type="text" id="commandInput" placeholder="Nhập lệnh..." onkeydown="if(event.key==='Enter'){sendCommand();}">
+            <button onclick="sendCommand()">Gửi</button>
+            <button onclick="saveGame()">Save Game</button>
+            <button onclick="backToMenu()">Thoát</button>
+        </div>
+    </div>
+    <script src="xor.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

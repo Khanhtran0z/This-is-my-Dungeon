@@ -1,0 +1,1 @@
+# Nhập API key Gemini của bạn vào đây
